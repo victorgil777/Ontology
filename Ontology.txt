@@ -1,0 +1,299 @@
+from owlready2 import *
+
+tourist = get_ontology("http://test.org/tourist.owl·") with tourist:
+class GenericPreference(Thing): pass class User(Thing): pass
+
+# Clases para gestionar el historial del usuario
+class Record(Thing): pass class CheckIn(Record): pass
+class PastLocation(Record): pass AllDisjoint([CheckIn, PastLocation])
+
+# Clases para gestionar los tipos de Ubicación turistica
+class Location(Thing): pass
+class InsideLocation(Location): pass class OutsideLocation(Location): pass class ServiceLocation(Location): pass
+class AdequateLocationTemporal(Location): pass # Location que concuerda con el contexto temporal.
+class AdequateLocationTopic(Location): pass # Location que concuerda con el topico.
+class AdequateLocationUnderAge(Location): pass # Location que permite a menores de edad.
+AllDisjoint([InsideLocation, OutsideLocation, ServiceLocation])
+class Schedule(Thing): pass
+class AdequateSchedule(Schedule): pass # Schedule de las Location que concuerda con el contexto temporal.
+# Clases para gestionar los perfiles, carateristicas # y preferencias del Usuario y la Ubicación
+class Characteristic(Thing): pass class Preference(Thing): pass
+# Clases para gestionar el estado emocional del usuario
+class EmotionalState(Thing): pass class Happy(EmotionalState): pass class Sad(EmotionalState): pass class Angry(EmotionalState): pass class Calm(EmotionalState): pass
+class Surprised(EmotionalState): pass class Tired(EmotionalState): pass class Normal(EmotionalState): pass
+AllDisjoint([Happy, Sad, Angry, Calm, Surprised, Tired, Normal])
+ 
+
+
+# Clases para gestionar el perfil solcial del usuario
+class Companion(Thing): pass class Single(Companion): pass class Group(Companion): pass class Couple(Companion): pass
+AllDisjoint([Single, Group, Couple])
+
+# Clases para gestionar los medios de transporte
+class TransportationPref(Thing): pass class Walking(TransportationPref): pass class Public(TransportationPref): pass class Bike(TransportationPref): pass class Private(TransportationPref): pass
+AllDisjoint([Walking, Public, Bike, Private])
+
+# Clases para gestionar los tipos de lugares turisticos por Topico
+class Topic(Thing): pass
+
+class Accomodation(Topic): pass # TOPICO: Accomodation
+class Apartment(Accomodation): pass class Bungalow(Accomodation): pass class Cabin(Accomodation): pass class Dormitory(Accomodation): pass class Farm(Accomodation): pass class Hotel(Accomodation): pass class House(Accomodation): pass class HouseBoat(Accomodation): pass class TreeHouse(Accomodation): pass class Chalet(Accomodation): pass
+class GuestHouse(Accomodation): pass class Hostel(Accomodation): pass AllDisjoint(
+[Apartment, Bungalow, Cabin, Dormitory, Farm, Hotel, House, HouseBoat, TreeHouse, Chalet, GuestHouse, Hostel])
+
+class Services(Topic): pass # TOPICO: Services
+class Atm(Services): pass class Bank(Services): pass
+class CurrencyExchange(Services): pass class InternetCafe(Services): pass class VendingMachine(Services): pass class Commercial(Services): pass
+class Kiosk(Services): pass class Oficce(Services): pass
+class Supermarket(Services): pass class Coworking(Services): pass class Clinic(Services): pass AllDisjoint(
+[Atm, Bank, CurrencyExchange, InternetCafe, VendingMachine, Commercial, Kiosk, Oficce, Supermarket, Coworking, Clinic])
+
+class Transportation(Topic): pass # TOPICO: Transportation
+class BicycleParking(Transportation): pass
+ 
+
+
+class BicycleRepairStation(Transportation): pass class BicycleRental(Transportation): pass
+class BoatRental(Transportation): pass class BusStation(Transportation): pass class CarRental(Transportation): pass class CarWash(Transportation): pass
+class CompressedAir(Transportation): pass class ChargingStation(Transportation): pass class FerryTerminal(Transportation): pass class FuelStation(Transportation): pass
+class MotorCycleParking(Transportation): pass class Parking(Transportation): pass
+class ParkingSpace(Transportation): pass class TaxiWait(Transportation): pass class Station(Transportation): pass
+AllDisjoint([BicycleParking, BicycleRepairStation, BicycleRental, BoatRental, BusStation, CarRental,
+CarWash, CompressedAir, ChargingStation, FerryTerminal,
+ 
+Station, TaxiWait])
+ 
+
+FuelStation, MotorCycleParking, Parking, ParkingSpace,
+ 
+class Food(Topic): pass # TOPICO: Food
+class Bar(Food): pass
+class Biergarten(Food): pass class Cafe(Food): pass
+class FastFood(Food): pass class FoodCourt(Food): pass class IceCream(Food): pass class Pub(Food): pass
+class Restaurant(Food): pass
+AllDisjoint([Bar, Biergarten, Cafe, FastFood, FoodCourt, IceCream, Pub, Restaurant])
+
+
+class NationalCulture(Topic): pass # TOPICO: NationalCulture
+class ArtsCentre(NationalCulture): pass class CommunityCentre(NationalCulture): pass
+class ConferenceCentre(NationalCulture): pass class EventsVenue(NationalCulture): pass class Fountain(NationalCulture): pass
+class SocialCentre(NationalCulture): pass class TownHall(NationalCulture): pass class PublicBath(NationalCulture): pass AllDisjoint(
+[ArtsCentre, CommunityCentre, ConferenceCentre, EventsVenue, Fountain, SocialCentre, TownHall, PublicBath])
+
+class Activity(Topic): pass # TOPICO: Activity
+class Bbq(Activity): pass
+class DiveCentre(Activity): pass class Hunting(Activity): pass class CaravanSite(Activity): pass class PicnicSite(Activity): pass
+ 
+
+class ThemePark(Activity): pass class WildernessHut(Activity): pass class Zoo(Activity): pass
+AllDisjoint([Bbq, DiveCentre, Hunting, CaravanSite, PicnicSite, ThemePark, WildernessHut, Zoo])
+
+class Shopping(Topic): pass # TOPICO: Shopping
+class MarketPlace(Shopping): pass class Alcohol(Shopping): pass class Bakery(Shopping): pass class Beverages(Shopping): pass class Butcher(Shopping): pass class Cheese(Shopping): pass class Chocolate(Shopping): pass class Coffee(Shopping): pass
+class Confectionery(Shopping): pass class Convinience(Shopping): pass class Deli(Shopping): pass
+class Dairy(Shopping): pass class FrozenFood(Shopping): pass
+class GreenGrocer(Shopping): pass class HealthFood(Shopping): pass class Pastry(Shopping): pass class SeaFood(Shopping): pass class Spices(Shopping): pass class Tea(Shopping): pass
+class Wine(Shopping): pass class Water(Shopping): pass class Boutique(Shopping): pass class Clothes(Shopping): pass class Jewelry(Shopping): pass class Leather(Shopping): pass class Shoes(Shopping): pass class Tailor(Shopping): pass class Beauty(Shopping): pass class Cosmetics(Shopping): pass
+class Hairdresser(Shopping): pass class Tattoo(Shopping): pass class Antiques(Shopping): pass class Art(Shopping): pass
+class Craft(Shopping): pass class Gift(Shopping): pass
+class Stationery(Shopping): pass class Pet(Shopping): pass
+class PetGrooming(Shopping): pass class Toys(Shopping): pass AllDisjoint(
+[MarketPlace, Alcohol, Bakery, Beverages, Butcher, Cheese, Chocolate, Coffee, Confectionery, Convinience,
+Deli, Dairy, FrozenFood, GreenGrocer, HealthFood, Pastry, SeaFood, Spices, Tea, Wine, Water, Boutique,
+Clothes, Jewelry, Leather, Shoes, Tailor, Beauty, Cosmetics, Hairdresser, Tattoo, Antiques, Art, Craft,
+Gift, Stationery, Pet, PetGrooming, Toys])
+ 
+
+
+
+class Entertaintment(Topic): pass # TOPICO: Entertaintment
+class Casino(Entertaintment): pass class Cinema(Entertaintment): pass class LoveHotel(Entertaintment): pass class NightClub(Entertaintment): pass class Planetarium(Entertaintment): pass class Theatre(Entertaintment): pass class SportsHall(Entertaintment): pass class Stadium(Entertaintment): pass
+class RecreationGround(Entertaintment): pass class AdultGamingCentre(Entertaintment): pass class AmusementArcade(Entertaintment): pass class BeachResort(Entertaintment): pass
+class BandStand(Entertaintment): pass class DogPark(Entertaintment): pass class CampSite(Entertaintment): pass class Fishing(Entertaintment): pass
+class FitnessCentre(Entertaintment): pass class MiniatureGolf(Entertaintment): pass class Playground(Entertaintment): pass class SportsCentre(Entertaintment): pass class SummerCamp(Entertaintment): pass class SwimmingPool(Entertaintment): pass class WaterPark(Entertaintment): pass class Aquarium(Entertaintment): pass
+AllDisjoint([Casino, Cinema, LoveHotel, NightClub, Planetarium, Theatre, SportsHall, Stadium, RecreationGround,
+AdultGamingCentre,
+AmusementArcade, BeachResort, BandStand, DogPark, CampSite, PicnicSite, Fishing, FitnessCentre,
+MiniatureGolf, Playground,
+SportsCentre, SummerCamp, SwimmingPool, WaterPark,
+Aquarium])
+
+
+class NaturalLandscape(Topic): pass # TOPICO: NaturalLandscape
+class AboriginalLand(NaturalLandscape): pass class NationalPark(NaturalLandscape): pass class VillageGreen(NaturalLandscape): pass class Garden(NaturalLandscape): pass
+class NatureReserve(NaturalLandscape): pass class Park(NaturalLandscape): pass
+class Pier(NaturalLandscape): pass class Bay(NaturalLandscape): pass class Beach(NaturalLandscape): pass class Geyser(NaturalLandscape): pass class Glacier(NaturalLandscape): pass class Isthmus(NaturalLandscape): pass class Reef(NaturalLandscape): pass
+class CaveEntrance(NaturalLandscape): pass class Cliff(NaturalLandscape): pass
+class Peak(NaturalLandscape): pass class River(NaturalLandscape): pass class Lake(NaturalLandscape): pass class Stream(NaturalLandscape): pass
+ 
+
+class WaterFall(NaturalLandscape): pass AllDisjoint([AboriginalLand, NationalPark, VillageGreen, Garden,
+NatureReserve, Park, Pier, Bay, Beach,
+Geyser, Glacier, Isthmus, Reef, CaveEntrance, Cliff, Peak, River, Lake, Stream, WaterFall])
+
+class CulturalLandscape(Topic): pass # TOPICO: CulturalLandscape
+class Monastery(CulturalLandscape): pass class Church(CulturalLandscape): pass class Mosque(CulturalLandscape): pass class Temple(CulturalLandscape): pass class Cathedral(CulturalLandscape): pass class Chapel(CulturalLandscape): pass class Synagogue(CulturalLandscape): pass class Bridge(CulturalLandscape): pass class Castle(CulturalLandscape): pass class Ruin(CulturalLandscape): pass class Aqueduct(CulturalLandscape): pass
+class ArchaeologicalSite(CulturalLandscape): pass class BattleField(CulturalLandscape): pass
+class HistoricBuilding(CulturalLandscape): pass class CastleWall(CulturalLandscape): pass
+class CityGate(CulturalLandscape): pass class CityWall(CulturalLandscape): pass
+class HistoricDistrict(CulturalLandscape): pass class HistoricalFarm(CulturalLandscape): pass class MilitaryFort(CulturalLandscape): pass class Locomotive(CulturalLandscape): pass
+class HistoricMansion(CulturalLandscape): pass class Memorial(CulturalLandscape): pass
+class Monument(CulturalLandscape): pass class RailwayCar(CulturalLandscape): pass class Ship(CulturalLandscape): pass
+class Tank(CulturalLandscape): pass class Tomb(CulturalLandscape): pass class Tower(CulturalLandscape): pass class Vehicle(CulturalLandscape): pass class Cemetery(CulturalLandscape): pass class Cross(CulturalLandscape): pass class Obelisk(CulturalLandscape): pass class WindMill(CulturalLandscape): pass class Town(CulturalLandscape): pass class Village(CulturalLandscape): pass class Square(CulturalLandscape): pass class ArtWork(CulturalLandscape): pass
+class Attraction(CulturalLandscape): pass class Gallery(CulturalLandscape): pass class Museum(CulturalLandscape): pass class Exhibition(CulturalLandscape): pass
+AllDisjoint([Monastery, Church, Mosque, Temple, Cathedral, Chapel, Synagogue, Bridge, Castle, Ruin, Aqueduct,
+ArchaeologicalSite,
+BattleField, HistoricBuilding, CastleWall, CityGate, CityWall, HistoricDistrict, HistoricalFarm,
+MilitaryFort,
+ 
+
+
+Locomotive, HistoricMansion, Memorial, Monument, RailwayCar, Ship, Tank, Tomb, Tower, Vehicle,
+Cemetery,
+Cross, Obelisk, WindMill, Town, Village, Square, ArtWork, Attraction, Gallery, Museum, Exhibition])
+AllDisjoint([Accomodation, Services, Transportation, Food, NationalCulture,
+Activity, Shopping, Entertaintment, NaturalLandscape, CulturalLandscape])
+
+
+# Clases para gestionar el Contexto
+class Context(Thing): pass
+class Geographical(Context): pass class Inside(Geographical): pass class Outside(Geographical): pass class Service(Geographical): pass
+AllDisjoint([Inside, Outside, Service])
+
+class Temporal(Context): pass class Environmental(Context): pass
+AllDisjoint([Geographical, Temporal, Environmental])
+
+class KeyWord(Thing): pass AllDisjoint([GenericPreference, User, Record,
+Location, Schedule, Characteristic, Preference, EmotionalState, Companion, TransportationPref, Topic, Context, KeyWord])
+
+
+# Relaciones Binarias entre User y GenericPreference:
+class hasGenericPreference(User >> GenericPreference): pass class isGenericPreferenceOf(GenericPreference >> User):
+owl_inverse_property = hasGenericPreference
+
+# Relaciones Binarias entre User y Record:
+class hasRecord(User >> Record): pass
+class isRecordOf(Record >> User): owl_inverse_property = hasRecord
+
+# Relaciones Binarias entre Record y Location:
+class hasLocation(Record >> Location, FunctionalProperty): pass class isLocationOf(Location >> Record, FunctionalProperty):
+owl_inverse_property = hasLocation
+
+# Relaciones Binarias entre Location y Schedule: class hasSchedule(Location >> Schedule): pass class isScheduleOf(Schedule >> Location):
+owl_inverse_property = hasSchedule
+
+# Relaciones Binarias entre Location y Characteristic
+class hasCharacteristic(Location >> Characteristic,
+ 
+
+FunctionalProperty): pass
+class isCharacteristicOf(Characteristic >> Location, FunctionalProperty):
+owl_inverse_property = hasCharacteristic
+
+# Relaciones Binarias entre Characteristic y TransportationPref: class hasTransportation(Characteristic >> TransportationPref): pass class isTransportationOf(TransportationPref >> Characteristic):
+owl_inverse_property = hasTransportation
+
+# Relaciones Binarias entre Characteristic y Context: class hasContext(Characteristic >> Context): pass class isContextOf(Context >> Characteristic):
+owl_inverse_property = hasContext
+
+# Relaciones Binarias entre Characteristic y Topic: class hasTopic(Characteristic >> Topic): pass class isTopicOf(Topic >> Characteristic):
+owl_inverse_property = hasTopic
+
+# Relaciones Binarias entre User y Preference:
+class hasPreference(User >> Preference, FunctionalProperty): pass class isPreferenceOf(Preference >> User, FunctionalProperty):
+owl_inverse_property = hasPreference
+
+# Relaciones Binarias entre Preference y EmotionalState: class hasEmotionalState(Preference >> EmotionalState): pass class isEmotionalStateOf(EmotionalState >> Preference):
+owl_inverse_property = hasEmotionalState
+
+# Relaciones Binarias entre Preference y Companion: class hasCompanion(Preference >> Companion): pass class isCompanionOf(Companion >> Preference):
+owl_inverse_property = hasCompanion
+
+# Relaciones Binarias entre Preference y TransportationPref:
+class prefHasTransportation(Preference >> TransportationPref): pass class isTransportationOfPref(TransportationPref >> Preference):
+owl_inverse_property = prefHasTransportation
+
+# Relaciones Binarias para ver el tipo de transporte del usuario: class typeOfTransportation(Preference >> TransportationPref): pass class isTypeOfTransportationOf(TransportationPref >> Preference):
+owl_inverse_property = typeOfTransportation
+
+# Relaciones Binarias entre Preference y Context: class prefHasContext(Preference >> Context): pass class isContextOfPref(Context >> Preference):
+owl_inverse_property = prefHasContext
+
+# Relaciones Binarias entre Preference y Topic: class prefHasTopic(Preference >> Topic): pass class isTopicOfPref(Topic >> Preference):
+owl_inverse_property = prefHasTopic
+
+# Relaciones Binarias entre OutsideLocation y InsideLocation
+ 
+
+
+class isInsideOf(InsideLocation >> OutsideLocation): pass class isConteinerOf(OutsideLocation >> InsideLocation):
+owl_inverse_property = isInsideOf
+
+# Relaciones Binarias entre OutsideLocation y ServiceLocation
+class isInsideOfServiceLocation(ServiceLocation >> OutsideLocation): pass
+class isConteinerOfServiceLocation(OutsideLocation >> ServiceLocation):
+owl_inverse_property = isInsideOfServiceLocation
+# Propiedades de GenericPreference:
+class departure_time(GenericPreference >> datetime.time,
+FunctionalProperty): pass
+class budget(GenericPreference >> float, FunctionalProperty): pass class arrival_time(GenericPreference >> datetime.time,
+FunctionalProperty): pass
+class dateGenPref(GenericPreference >> datetime.date, FunctionalProperty): pass
+AllDifferent([departure_time, budget, arrival_time, dateGenPref])
+
+# Propiedades de User
+class identity(User >> int, FunctionalProperty): pass
+class current_location(User >> Location, FunctionalProperty): pass class name_user(User >> str, FunctionalProperty): pass
+class gender(User >> str, FunctionalProperty): pass class age(User >> int, FunctionalProperty): pass
+class education(User >> str, FunctionalProperty): pass class income_level(User >> str, FunctionalProperty): pass
+# AllDifferent([identity, current_location, name_user, gender, age, education, income_level])
+# Propiedades de Record
+class date_record(Record >> datetime.date, FunctionalProperty): pass
+# Propiedades de CheckIn:
+class time_checkin(CheckIn >> datetime.time, FunctionalProperty): pass
+
+# Propiedades de PastLocation:
+class rating(PastLocation >> int): pass
+class content_review(PastLocation >> str): pass AllDifferent([rating, content_review])
+
+# Propiedades de Location:
+class identity_location(Location >> int, FunctionalProperty): pass class name_location(Location >> str, FunctionalProperty): pass class address(Location >> str, FunctionalProperty): pass
+class staff(Location >> str): pass
+class image(Location >> str, FunctionalProperty): pass AllDifferent([identity_location, name_location, address, staff,
+image])
+
+# Relaciòn entre Location y keyWord: keywords
+class keywords(Location >> KeyWord): pass
+
+# Propiedades de Schedule:
+ 
+
+class date_schedule(Schedule >> datetime.date, FunctionalProperty): pass
+class opening_time(Schedule >> datetime.time, FunctionalProperty): pass
+class closing_time(Schedule >> datetime.time, FunctionalProperty): pass
+class event(Schedule >> str, FunctionalProperty): pass class cost(Schedule >> float, FunctionalProperty): pass class underage(Schedule >> bool, FunctionalProperty): pass
+AllDifferent([date_schedule, opening_time, closing_time, event, cost, underage])
+
+# Propiedades de TransportationPref:
+class required_time(TransportationPref >> float,
+FunctionalProperty): pass
+class cost_transp(TransportationPref >> float, FunctionalProperty): pass
+AllDifferent([required_time, cost_transp])
+
+
+# Propiedades de Temporal:
+class hora(Temporal >> datetime.time, FunctionalProperty): pass class fecha(Temporal >> datetime.date, FunctionalProperty): pass AllDifferent([hora, fecha])
+
+
+# Propiedades de Environmental:
+class weather(Environmental >> str, FunctionalProperty): pass class temperature(Environmental >> str, FunctionalProperty): pass class crowdedness(Environmental >> str, FunctionalProperty): pass class illumination(Environmental >> int, FunctionalProperty): pass class humidity(Environmental >> str, FunctionalProperty): pass class noise(Environmental >> str, FunctionalProperty): pass AllDifferent([weather, temperature, crowdedness, illumination,
+humidity, noise])
+class RecommendedUserLoc(Location): pass
+
+# Relaciones Binarias entre User y RecommendedUserLoc:
+class hasRecommendedLoc(User >> Location): pass
+class isRecommendedLocOf(Location >> User): owl_inverse_property = hasRecommendedLoc
+
+
+class Test(Thing): pass
+tourist.save("tourist.owl")
